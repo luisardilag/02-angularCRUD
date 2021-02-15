@@ -33,13 +33,28 @@ export class UsuarioComponent implements OnInit {
 
   guardar( form: NgForm ) {
     
-    this.usuariosService.crearUsuario( this.user )
-        .subscribe( resp => {
+    if( this.user.id ) {
+      this.usuariosService.actualizarUsuario( this.user )
+          .subscribe( resp => {
 
-          console.log(resp);
-          this.user = resp;
+            console.log( resp );
+            
+          });
+    } else {
+      this.usuariosService.crearUsuario( this.user )
+          .subscribe( resp => {
+  
+            console.log(resp);
+            this.user = resp;
+  
+          });
+    }
 
-        });
+
+
+
+
+
 
   }
 

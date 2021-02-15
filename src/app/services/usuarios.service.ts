@@ -8,13 +8,13 @@ import { map } from 'rxjs/operators'
 })
 export class UsuariosService {
 
-  private url = ''; // COLOCA ACÁ LA URL DE LA BASE DE DATOS DE FIREBASE
+  private url = '';  // COLOCA ACÁ LA URL DE LA BASE DE DATOS DE FIREBASE
 
   constructor( private http: HttpClient ) { }
 
 
+  // CREA el usuario en la Base de datos
   crearUsuario( usuario: UsuarioModel ) {
-
     return this.http.post(`${ this.url }/usuarios.json`, usuario )
               .pipe(
                 map( (resp: any ) => {
@@ -22,6 +22,11 @@ export class UsuariosService {
                   return usuario;
                 })
               );
+  }
+
+
+  actualizarUsuario( usuario: UsuarioModel ) {
+    return this.http.put( `${ this.url }/usuarios/${ usuario.id }.json`, usuario );
   }
 
 }
