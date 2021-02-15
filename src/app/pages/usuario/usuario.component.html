@@ -1,31 +1,46 @@
-<div class="row mt-5">
-    
-    <mat-form-field appearance="fill">
-        <mat-label>Nombre y Apellido</mat-label>
-        <input matInput>
-    </mat-form-field>
+<mat-toolbar color="primary">
+    <span class="fill-remaining-space">My Reactive Form with Material</span>
+</mat-toolbar>
 
-   
-    <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="pat@example.com" [formControl]="email" required>
-        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-    </mat-form-field>
-   
-      
+<div class="container">
 
-    <mat-form-field appearance="fill">
-        <mat-label>Cargo</mat-label>
-        <mat-select>
-            <mat-option value="one">First option</mat-option>
-            <mat-option value="two">Second option</mat-option>
-        </mat-select>
-    </mat-form-field>
+    <form (ngSubmit)="guardar( f )" #f="ngForm">
+        <div class="row my-3">
 
-    <mat-form-field appearance="fill">
-        <mat-label>Comentarios</mat-label>
-        <textarea matInput></textarea>
-    </mat-form-field>
+            <h2>Datos del Usuario</h2>
+
+            <!-- INPUT -->
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre y Apellido</mat-label>
+                <input 
+                    matInput 
+                    [(ngModel)]="user.name"
+                    name="name"
+                >
+            </mat-form-field>
+
+
+            <!-- SELECT -->
+            <mat-form-field appearance="fill">
+                <mat-label>Sexo</mat-label>
+                <mat-select [(value)]="user.sexGender">
+                    <mat-option *ngFor="let gender of genders; index as i" [value]="gender.value" >
+                        {{ gender.sex }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <!-- TEXTAREA -->
+            <mat-form-field appearance="fill">
+                <mat-label>Comentario</mat-label>
+                <textarea matInput [(ngModel)]="user.comments" name="comments"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button mat-flat-button color="warn" class="nofocus">Guardar</button>
+        </div>
+    </form>
 
 </div>
-  
