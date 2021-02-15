@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { Observable } from 'rxjs';
+
+import Swal from 'sweetalert2'
 
 
 interface SexInterface {
@@ -33,28 +37,35 @@ export class UsuarioComponent implements OnInit {
 
   guardar( form: NgForm ) {
     
-    if( this.user.id ) {
-      this.usuariosService.actualizarUsuario( this.user )
-          .subscribe( resp => {
-
-            console.log( resp );
-            
-          });
-    } else {
-      this.usuariosService.crearUsuario( this.user )
-          .subscribe( resp => {
-  
-            console.log(resp);
-            this.user = resp;
-  
-          });
+    if( form.invalid ) {
+      console.log('Formulario Inválido');
+      return;
     }
 
+    Swal.fire({
+      title: 'Espere!',
+      text: 'Guardando información',
+      icon: 'info',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
 
+    let peticion: Observable<any>;
 
+    if( this.user.id ) {
+      peticion = this.usuariosService.actualizarUsuario( this.user );
+    } else {
+      peticion = this.usuariosService.crearUsuario( this.user );
+    }
 
-
-
+    peticion.subscribe( resp => {
+      Swal.fire({
+        title: 'Espere!',
+        text: 'Guardando información',
+        icon: 'success',
+        allowOutsideClick: false
+      });
+    });
 
   }
 

@@ -1,7 +1,7 @@
 
 
 export class UsuarioModel {  
-    id!: string;
+    id?: string;
     name!: string;
     sexGender!: string;
     comments!: string;

@@ -26,7 +26,14 @@ export class UsuariosService {
 
 
   actualizarUsuario( usuario: UsuarioModel ) {
-    return this.http.put( `${ this.url }/usuarios/${ usuario.id }.json`, usuario );
+
+    const usuarioTemp = {
+      ...usuario
+    };
+
+    delete usuarioTemp.id;
+
+    return this.http.put( `${ this.url }/usuarios/${ usuario.id }.json`, usuarioTemp );
   }
 
 }
