@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuariosService } from 'src/app/services/usuarios.service';
+
+import { UsuarioModel } from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-usuarios',
@@ -7,27 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuariosComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'date', 'sex', 'email', 'position', 'comments'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['name', 'sex', 'comments'];
+  usuarios: UsuarioModel[] = [];
   
 
-  constructor() { }
+  constructor( private usuariosService: UsuariosService ) { }
 
   ngOnInit(): void {
+
+    this.usuariosService.getUsuarios()
+      .subscribe( resp => {
+        console.log(resp);
+        this.usuarios = resp} );
   }
 
 }
-
-export interface Usuario {
-  name: string;
-  date: number;
-  sex: string;
-  email: string;
-  position: string;
-  comments: string;
-}
-
-const ELEMENT_DATA: Usuario[] = [
-  {name: 'Luis Ardila', date: 34, sex: 'M', email: 'luisard@gmail.com', position: 'Ing', comments: 'Lorem'},
-  {name: 'Luis Ardila', date: 34, sex: 'M', email: 'luisard@gmail.com', position: 'Ing', comments: 'Lorem'},
-];
